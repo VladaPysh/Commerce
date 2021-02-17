@@ -4,3 +4,11 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+
+class Listing(models.Model):
+    title = models.CharField(max_length=64)
+    description = models.TextField(max_length=500)
+    start_bid = models.IntegerField()
+
+    def __str__(self):
+        return self.title
