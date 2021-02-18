@@ -3,6 +3,8 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 from .models import User, Listing
 from .forms import CreateListing
@@ -63,15 +65,15 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+@login_required(login_url='/login')
 def create(request):
     if request.method == 'POST':
         form = CreateListing(request.POST)
         if form.is_valid():
             listing = form.save()
             
-            return render(request, "auctions/create.html", {
-                'message': "saved",
-                'form': form
+            return render(request, "auctions/item.html", {
+                'listing': listing
             })
         else:
             form = CreateListing
@@ -80,3 +82,9 @@ def create(request):
             'form': CreateListing()
         })
 
+@login_required(login_url='/login')
+def item(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    return render(request, "auctions/item.html", {
+        "listing": listing
+    })
