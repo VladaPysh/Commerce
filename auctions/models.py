@@ -9,7 +9,8 @@ class User(AbstractUser):
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(max_length=500)
-    start_bid = models.IntegerField()
+    image = models.ImageField(null=True, blank=True)
+    start_bid = models.DecimalField(max_digits=6, decimal_places=2)
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

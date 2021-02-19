@@ -3,10 +3,10 @@
 {% block body %}
 <form action="{% url 'create' %}" method="POST">
   {% if message %}
-  {{ message}}
+  {{ message }}
   {% endif %}
   {% csrf_token %}
-  {{ form }}
+  {{ form.as_p }}
   <input type="submit" value="Submit">
 </form>
 

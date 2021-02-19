@@ -1,8 +1,10 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+<img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
 <h1>{{ listing.title }}</h1>
-{{ listing.description }}
+<p>{{ listing.description }}</p>
+<p>{{ listing.start_bid }}</p>
+<p>{{ listing.date_created }}</p>
 
 {% endblock %}
