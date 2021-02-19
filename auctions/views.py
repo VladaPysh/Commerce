@@ -71,6 +71,7 @@ def create(request):
         form = CreateListing(request.POST, request.FILES)
         if form.is_valid():
             listing = form.save()
+            listing.save()
             
             return HttpResponseRedirect(reverse("index"))
         else:

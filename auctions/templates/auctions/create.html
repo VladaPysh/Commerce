@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<form action="{% url 'create' %}" method="POST">
+<form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
   {% if message %}
   {{ message }}
   {% endif %}
