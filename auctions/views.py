@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-from .models import User, Listing
+from .models import User, Listing, Category
 from .forms import CreateListing
 
 
@@ -77,7 +77,7 @@ def create(request):
             listing.user = request.user
             listing.save()
             
-            return redirect("item", listing_id = listing.id)
+            return redirect("item", listing_title = listing.title)
         else:
             form = CreateListing
     
@@ -92,11 +92,13 @@ def item(request, listing_title):
         "listing": listing
     })
 
-def category(request, category):
-    listing = Listing.objects.all()
-    category_name = category
-    listing_category = Listing.objects.filter(category=category_name)
+def category(request, category_name):
+    #get list of categories
+    category = Category.objects.get(category=category_name)
+    #get listings where category field matches category selected
+    listing_category = Listing.objects.filter(category=category)
+    #return template providing category names and listings
     return render(request, "auctions/category.html", {
-        "category": category_name,
+        "category": listing_category.category,
         "listing": listing_category
     })
