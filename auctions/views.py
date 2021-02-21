@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-from .models import User, Listing, Category
+from .models import User, Listing, Category, Watchlist
 from .forms import CreateListing
 
 
@@ -85,6 +85,13 @@ def create(request):
     return render(request, "auctions/create.html", {
             'form': CreateListing()
         })
+
+@login_required(login_url='/login')
+def watch(request):
+    listings = Watchlist.objects.all()
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings
+    })
 
 @login_required(login_url='/login')
 def item(request, listing_title):

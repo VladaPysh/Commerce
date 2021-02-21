@@ -23,3 +23,7 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+class Watchlist(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
