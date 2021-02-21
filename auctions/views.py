@@ -86,8 +86,17 @@ def create(request):
         })
 
 @login_required(login_url='/login')
-def item(request, listing_id):
-    listing = Listing.objects.get(id=listing_id)
+def item(request, listing_title):
+    listing = Listing.objects.get(title=listing_title)
     return render(request, "auctions/item.html", {
         "listing": listing
+    })
+
+def category(request, category):
+    listing = Listing.objects.all()
+    category_name = category
+    listing_category = Listing.objects.filter(category=category_name)
+    return render(request, "auctions/category.html", {
+        "category": category_name,
+        "listing": listing_category
     })
