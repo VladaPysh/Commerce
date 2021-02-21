@@ -99,6 +99,7 @@ def category(request, category_name):
     listing_category = Listing.objects.filter(category=category)
     #return template providing category names and listings
     return render(request, "auctions/category.html", {
-        "category": listing_category.category,
-        "listing": listing_category
+        "category": category.category,
+        "listings": listing_category,
+        "categories": Category.objects.all()
     })
