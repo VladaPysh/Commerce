@@ -13,7 +13,8 @@ from .forms import CreateListing
 def index(request):
     listings = Listing.objects.all()
     return render(request, "auctions/index.html", {
-        "listings": listings
+        "listings": listings,
+        "categories": Category.objects.all()
     })
 
 
