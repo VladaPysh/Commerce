@@ -2,9 +2,6 @@
 
 {% block body %}
 <form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
-  {% if message %}
-  {{ message }}
-  {% endif %}
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" value="Submit">

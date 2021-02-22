@@ -6,8 +6,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-from .models import User, Listing, Category, Watchlist
-from .forms import CreateListing
+from .models import User, Listing, Category, Watchlist, Comment
+from .forms import CreateListing, LeaveComment
 
 
 def index(request):
@@ -88,6 +88,8 @@ def create(request):
 
 @login_required(login_url='/login')
 def watch(request):
+    #if request.post
+    #get listing and add to warchlist
     listings = Watchlist.objects.all()
     return render(request, "auctions/watchlist.html", {
         "listings": listings
@@ -97,8 +99,23 @@ def watch(request):
 def item(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     return render(request, "auctions/item.html", {
-        "listing": listing
+        "listing": listing,
+        "form": LeaveComment(),
+        "comments": Comment.objects.all()
     })
+
+@login_required(login_url='/login')
+def comment(request):
+    if request.method == "POST":
+        form = LeaveComment(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            form = LeaveComment
+
 
 def category(request, category_name):
     #get list of categories

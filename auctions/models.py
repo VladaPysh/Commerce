@@ -27,3 +27,11 @@ class Listing(models.Model):
 class Watchlist(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Comment(models.Model):
+    subject = models.CharField(max_length=64)
+    comment = models.TextField(max_length=500)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.subject
