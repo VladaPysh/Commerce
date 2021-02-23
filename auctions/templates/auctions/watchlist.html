@@ -5,7 +5,9 @@
 
     <h2>Watchlist</h2>
     {% for listing in watchlist.listing.all %}
-    <h4>{{ listing }} </h4>
+    <h4>{{ listing.title }} </h4>
+    {% empty %}
+    <h5>Nothing in a watchlist</h5>
     {% endfor %}
     
 {% endblock %}

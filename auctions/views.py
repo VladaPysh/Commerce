@@ -89,13 +89,21 @@ def create(request):
 @login_required(login_url='/login')
 def watch(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
-    user = request.user
-    if Watchlist.objects.filter(user=user).exists():
-        watchlist = Watchlist.objects.get(user=user)
+    if Watchlist.objects.filter(user=request.user).exists():
+        watchlist = Watchlist.objects.get(user=request.user)
     else:
-        watchlist = Watchlist.objects.create(user=user)
+        watchlist = Watchlist.objects.create(user=request.user)
     watchlist.listing.add(listing)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/login')
+def watchlist(request):
+    if not Watchlist.objects.filter(user=request.user).exists():
+        watchlist = Watchlist.objects.create(user=request.user)
+    watchlist = Watchlist.objects.get(user=request.user)
+    return render(request, "auctions/watchlist.html", {
+        "watchlist": watchlist
+        })
 
 @login_required(login_url='/login')
 def item(request, listing_title):
