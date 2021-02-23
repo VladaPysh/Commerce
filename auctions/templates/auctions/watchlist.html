@@ -4,8 +4,8 @@
 <a href="{% url 'create' %}">Create Listing</a>
 
     <h2>Watchlist</h2>
-    {% for listing in listings %}
-    <h4>{{ listing.listing }} </h4>
+    {% for listing in watchlist.listing.all %}
+    <h4>{{ listing }} </h4>
     {% endfor %}
     
 {% endblock %}

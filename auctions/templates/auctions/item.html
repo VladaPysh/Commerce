@@ -1,6 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+{% if message %}
+<h6>{{ message }}</h6>
+{% endif %}
 <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
 <h1>{{ listing.title }}</h1>
 <p>{{ listing.description }}</p>
@@ -8,6 +11,7 @@
 <p>{{ listing.get_category_display }}</p>
 <p>{{ listing.user }}</p>
 <p>{{ listing.date_created }}</p>
+<a href="{% url 'watch' listing.title %}" method="POST">Add to watchlist</a>
 
 <form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}

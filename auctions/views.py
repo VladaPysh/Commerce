@@ -87,20 +87,22 @@ def create(request):
         })
 
 @login_required(login_url='/login')
-def watch(request):
-    #if request.post
-    #get listing and add to watchlist
-    listings = Watchlist.objects.all()
-    return render(request, "auctions/watchlist.html", {
-        "listings": listings
-    })
+def watch(request, listing_title):
+    listing = Listing.objects.get(title=listing_title)
+    user = request.user
+    if Watchlist.objects.filter(user=user).exists():
+        watchlist = Watchlist.objects.get(user=user)
+    else:
+        watchlist = Watchlist.objects.create(user=user)
+    watchlist.listing.add(listing)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='/login')
 def item(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     return render(request, "auctions/item.html", {
         "listing": listing,
-        "form": LeaveComment()
+        "form": LeaveComment(),
     })
 
 @login_required(login_url='/login')

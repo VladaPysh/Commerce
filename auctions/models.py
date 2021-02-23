@@ -34,5 +34,5 @@ class Listing(models.Model):
         return self.title
 
 class Watchlist(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ManyToManyField(Listing)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
