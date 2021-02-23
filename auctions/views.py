@@ -89,7 +89,7 @@ def create(request):
 @login_required(login_url='/login')
 def watch(request):
     #if request.post
-    #get listing and add to warchlist
+    #get listing and add to watchlist
     listings = Watchlist.objects.all()
     return render(request, "auctions/watchlist.html", {
         "listings": listings
@@ -100,18 +100,19 @@ def item(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     return render(request, "auctions/item.html", {
         "listing": listing,
-        "form": LeaveComment(),
-        "comments": Comment.objects.all()
+        "form": LeaveComment()
     })
 
 @login_required(login_url='/login')
-def comment(request):
+def comment(request, listing_title):
+    listing = Listing.objects.get(title=listing_title)
     if request.method == "POST":
         form = LeaveComment(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
             comment.save()
+            listing.comment.add(comment)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             form = LeaveComment

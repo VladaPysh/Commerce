@@ -9,13 +9,13 @@
 <p>{{ listing.user }}</p>
 <p>{{ listing.date_created }}</p>
 
-<form action="{% url 'comment' %}" method="POST">
+<form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" value="Submit">
 </form>
 
-{% for comment in comments %}
+{% for comment in listing.comment.all %}
 <h6>{{ comment.subject }}</h6>
 <p>{{ comment.comment }}</p>
 <p>{{ comment.user }}</p>

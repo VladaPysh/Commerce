@@ -12,6 +12,14 @@ class Category(models.Model):
     def __str__(self):
         return self.category
 
+class Comment(models.Model):
+    subject = models.CharField(max_length=64)
+    comment = models.TextField(max_length=500)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.subject
+
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(max_length=500)
@@ -20,6 +28,7 @@ class Listing(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ManyToManyField(Comment)
 
     def __str__(self):
         return self.title
@@ -27,11 +36,3 @@ class Listing(models.Model):
 class Watchlist(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-class Comment(models.Model):
-    subject = models.CharField(max_length=64)
-    comment = models.TextField(max_length=500)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.subject
