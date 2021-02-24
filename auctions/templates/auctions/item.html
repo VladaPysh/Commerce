@@ -17,7 +17,17 @@
 <p>{{ listing.get_category_display }}</p>
 <p>{{ listing.user }}</p>
 <p>{{ listing.date_created }}</p>
-<a href="{% url 'watch' listing.title %}">Add to watchlist</a>
+{% if listing not in watchlist.listing.all %}
+  <form action="{% url 'watch' listing.title %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Add to watchlist</button>
+  </form>
+{% else %}
+  <form action="{% url 'dont_watch' listing.title %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Remove from watchlist</button>
+  </form>
+{% endif %}
 
 <form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}

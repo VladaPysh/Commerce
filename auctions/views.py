@@ -91,13 +91,23 @@ def create(request):
 @login_required(login_url='/login')
 def watch(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
-    if Watchlist.objects.filter(user=request.user).exists():
-        watchlist = Watchlist.objects.get(user=request.user)
-    else:
-        watchlist = Watchlist.objects.create(user=request.user)
+    if request.method == "POST":
+        if Watchlist.objects.filter(user=request.user).exists():
+            watchlist = Watchlist.objects.get(user=request.user)
+        else:
+            watchlist = Watchlist.objects.create(user=request.user)
     watchlist.listing.add(listing)
     messages.add_message(request, messages.SUCCESS, "Added to your watchlist")
     return redirect("item", listing_title=listing.title)
+
+@login_required(login_url='/login')
+def dont_watch(request, listing_title):
+    listing = Listing.objects.get(title=listing_title)
+    if request.method == "POST":
+        watchlist = Watchlist.objects.get(user=request.user)
+        watchlist.listing.remove(listing)
+        messages.add_message(request, messages.SUCCESS, "Removed from your watchlist")
+        return redirect("item", listing_title=listing.title)
 
 @login_required(login_url='/login')
 def watchlist(request):
@@ -115,7 +125,8 @@ def item(request, listing_title):
     return render(request, "auctions/item.html", {
         "listing": listing,
         "form": LeaveComment(),
-        "categories": Category.objects.all()
+        "categories": Category.objects.all(),
+        "watchlist": Watchlist.objects.get(user=request.user)
     })
 
 @login_required(login_url='/login')
