@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 from .models import User, Listing, Category, Watchlist, Comment
@@ -83,7 +84,8 @@ def create(request):
             form = CreateListing
     
     return render(request, "auctions/create.html", {
-            'form': CreateListing()
+            'form': CreateListing(),
+            "categories": Category.objects.all()
         })
 
 @login_required(login_url='/login')
@@ -94,7 +96,8 @@ def watch(request, listing_title):
     else:
         watchlist = Watchlist.objects.create(user=request.user)
     watchlist.listing.add(listing)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    messages.add_message(request, messages.SUCCESS, "Added to your watchlist")
+    return redirect("item", listing_title=listing.title)
 
 @login_required(login_url='/login')
 def watchlist(request):
@@ -102,7 +105,8 @@ def watchlist(request):
         watchlist = Watchlist.objects.create(user=request.user)
     watchlist = Watchlist.objects.get(user=request.user)
     return render(request, "auctions/watchlist.html", {
-        "watchlist": watchlist
+        "watchlist": watchlist,
+        "categories": Category.objects.all()
         })
 
 @login_required(login_url='/login')
@@ -111,6 +115,7 @@ def item(request, listing_title):
     return render(request, "auctions/item.html", {
         "listing": listing,
         "form": LeaveComment(),
+        "categories": Category.objects.all()
     })
 
 @login_required(login_url='/login')
@@ -127,6 +132,12 @@ def comment(request, listing_title):
         else:
             form = LeaveComment
 
+@login_required(login_url='/login')
+def delete_comment(request, comment_subject):
+    comment = Comment.objects.get(subject=comment_subject)
+    comment.delete()
+    messages.add_message(request, messages.SUCCESS, "Comment deleted")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def category(request, category_name):
     #get list of categories
