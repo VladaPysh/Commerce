@@ -161,3 +161,24 @@ def category(request, category_name):
         "listings": listing_category,
         "categories": Category.objects.all()
     })
+
+def search(request):
+    query = request.GET.get('q')
+    listings = Listing.objects.all()
+    for listing in listings:
+        if query in listing.title:
+            return redirect("item", listing_title = query)
+        else:
+            entries = []
+            for listing in listings:
+                if query.lower() in listing.title.lower():
+                    entries.append(listing)
+            if entries:
+                return render(request, "auctions/search.html", {
+                    "listings": entries
+                })
+            else:
+                return render(request, "auctions/search.html", {
+                    "message": "Nothing found"
+                })
+            
