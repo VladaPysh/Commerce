@@ -141,7 +141,7 @@ def item(request, listing_title):
         else:
             messages.add_message(request, messages.WARNING, "Enter higher value")
             return redirect("item", listing_title=listing.title)
-        
+            
     return render(request, "auctions/item.html", {
         "listing": listing,
         "form": LeaveComment(),

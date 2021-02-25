@@ -10,14 +10,19 @@
   {% endfor %}
 </ul>
 {% endif %}
+
 <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
 <h1>{{ listing.title }}</h1>
 <p>{{ listing.description }}</p>
 <p>{{ listing.start_bid }}</p>
+
+{% if request.user != listing.user %}
 <form action="{% url 'item' listing.title %}" method="POST">
   {% csrf_token %}
   {{ bid }}
 </form>
+{% endif %}
+
 <p>{{ listing.get_category_display }}</p>
 <p>{{ listing.user }} {{ listing.date_created }}</p>
 {% if listing not in watchlist.listing.all %}
