@@ -66,6 +66,7 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
+        watchlist = Watchlist.objects.create(user=request.user)
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
@@ -92,13 +93,10 @@ def create(request):
 def watch(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     if request.method == "POST":
-        if Watchlist.objects.filter(user=request.user).exists():
-            watchlist = Watchlist.objects.get(user=request.user)
-        else:
-            watchlist = Watchlist.objects.create(user=request.user)
-    watchlist.listing.add(listing)
-    messages.add_message(request, messages.SUCCESS, "Added to your watchlist")
-    return redirect("item", listing_title=listing.title)
+        watchlist = Watchlist.objects.get(user=request.user)
+        watchlist.listing.add(listing)
+        messages.add_message(request, messages.SUCCESS, "Added to your watchlist")
+        return redirect("item", listing_title=listing.title)
 
 @login_required(login_url='/login')
 def dont_watch(request, listing_title):
@@ -134,7 +132,11 @@ def item(request, listing_title):
                 bid = bid.save(commit=False)
                 bid.user = request.user
                 bid.save()
+                #save new value in listing bid instance
                 listing.bid.add(bid)
+                #overwrite start_bid with a new start value
+                listing.start_bid = bid.bid
+                listing.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.add_message(request, messages.WARNING, "Enter higher value")
