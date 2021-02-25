@@ -121,16 +121,24 @@ def watchlist(request):
 
 @login_required(login_url='/login')
 def item(request, listing_title):
+    #get item
     listing = Listing.objects.get(title=listing_title)
     if request.method == "POST":
+        #get start bid value
         start_bid = listing.start_bid
-        bid = Bid(request.POST)
-        if bid.is_valid():
-            bid = bid.save(commit=False)
-            bid.user = request.user
-            bid.save()
-            listing.bid.add(bid)
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        #get info from Bid form check if value is greater than starting price
+        bid = float(request.POST['bid'])
+        if bid > start_bid:
+            bid = Bid(request.POST)
+            if bid.is_valid():
+                bid = bid.save(commit=False)
+                bid.user = request.user
+                bid.save()
+                listing.bid.add(bid)
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.add_message(request, messages.WARNING, "Enter higher value")
+            return redirect("item", listing_title=listing.title)
         
     return render(request, "auctions/item.html", {
         "listing": listing,
