@@ -14,9 +14,12 @@
 <h1>{{ listing.title }}</h1>
 <p>{{ listing.description }}</p>
 <p>{{ listing.start_bid }}</p>
+<form action="{% url 'item' listing.title %}" method="POST">
+  {% csrf_token %}
+  {{ bid }}
+</form>
 <p>{{ listing.get_category_display }}</p>
-<p>{{ listing.user }}</p>
-<p>{{ listing.date_created }}</p>
+<p>{{ listing.user }} {{ listing.date_created }}</p>
 {% if listing not in watchlist.listing.all %}
   <form action="{% url 'watch' listing.title %}" method="POST">
     {% csrf_token %}

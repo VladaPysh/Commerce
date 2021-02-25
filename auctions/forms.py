@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Listing, Comment
+from .models import Listing, Comment, Bid
 
 class CreateListing(ModelForm):
     class Meta:
@@ -10,3 +10,8 @@ class LeaveComment(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject', 'comment']
+
+class Bid(ModelForm):
+    class Meta:
+        model = Bid
+        fields = ['bid']

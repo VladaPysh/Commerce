@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-from .models import User, Listing, Category, Watchlist, Comment
-from .forms import CreateListing, LeaveComment
+from .models import *
+from .forms import CreateListing, LeaveComment, Bid
 
 
 def index(request):
@@ -122,9 +122,20 @@ def watchlist(request):
 @login_required(login_url='/login')
 def item(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
+    if request.method == "POST":
+        start_bid = listing.start_bid
+        bid = Bid(request.POST)
+        if bid.is_valid():
+            bid = bid.save(commit=False)
+            bid.user = request.user
+            bid.save()
+            listing.bid.add(bid)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        
     return render(request, "auctions/item.html", {
         "listing": listing,
         "form": LeaveComment(),
+        "bid": Bid(),
         "categories": Category.objects.all(),
         "watchlist": Watchlist.objects.get(user=request.user)
     })
@@ -166,7 +177,7 @@ def search(request):
     query = request.GET.get('q')
     listings = Listing.objects.all()
     for listing in listings:
-        if query in listing.title:
+        if query == listing.title:
             return redirect("item", listing_title = query)
         else:
             entries = []
@@ -181,4 +192,3 @@ def search(request):
                 return render(request, "auctions/search.html", {
                     "message": "Nothing found"
                 })
-            
