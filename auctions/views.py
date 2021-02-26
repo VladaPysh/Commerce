@@ -151,6 +151,15 @@ def item(request, listing_title):
     })
 
 @login_required(login_url='/login')
+def auction_status(request, listing_title):
+    listing = Listing.objects.get(title=listing_title)
+    if request.method == "POST":
+        listing.status = True
+        listing.save()
+    messages.add_message(request, messages.SUCCESS, "Auction closed")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/login')
 def comment(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     if request.method == "POST":

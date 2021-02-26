@@ -4,37 +4,57 @@
 {% if messages %}
 <ul class="messages">
   {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
       {{ message }}
     </li>
   {% endfor %}
 </ul>
 {% endif %}
+<div>
+  {% if listing.status == True %}
+    This auction is closed.
+    {% for user in listing.bid.all %}
+      {% if listing.start_bid == user.bid %}
+        {% if user.user == request.user %}
+          Congratulations {{ user.user }}!
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
 
-<img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
-<h1>{{ listing.title }}</h1>
-<p>{{ listing.description }}</p>
-<p>{{ listing.start_bid }}</p>
+<div> 
+  <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
+  <h1>{{ listing.title }}</h1>
+  <p>{{ listing.description }}</p>
+  Current bid: {{ listing.start_bid }}</p>
+  <p>{{ listing.get_category_display }}</p>
+  <p>{{ listing.user }} {{ listing.date_created }}</p>
+</div>
 
-{% if request.user != listing.user %}
-<form action="{% url 'item' listing.title %}" method="POST">
-  {% csrf_token %}
-  {{ bid }}
-</form>
-{% endif %}
+{% if listing.status == False %}
+  {% if request.user != listing.user %}
+    <form action="{% url 'item' listing.title %}" method="POST">
+      {% csrf_token %}
+      {{ bid }}
+    </form>
+  {% endif %}
 
-<p>{{ listing.get_category_display }}</p>
-<p>{{ listing.user }} {{ listing.date_created }}</p>
-{% if listing not in watchlist.listing.all %}
-  <form action="{% url 'watch' listing.title %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Add to watchlist</button>
-  </form>
-{% else %}
-  <form action="{% url 'dont_watch' listing.title %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Remove from watchlist</button>
-  </form>
+  {% if request.user == listing.user %}
+    <a href="{% url 'status' listing.title %}">Close auction</a>
+  {% endif %}
+
+  {% if listing not in watchlist.listing.all %}
+    <form action="{% url 'watch' listing.title %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">Add to watchlist</button>
+    </form>
+  {% else %}
+    <form action="{% url 'dont_watch' listing.title %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">Remove from watchlist</button>
+    </form>
+  {% endif %}
 {% endif %}
 
 <form action="{% url 'comment' listing.title %}" method="POST">
@@ -44,12 +64,12 @@
 </form>
 
 {% for comment in listing.comment.all %}
-<h6>{{ comment.subject }}</h6>
-<p>{{ comment.comment }}</p>
-<p>{{ comment.user }} {{ comment.date }}</p>
-{% if request.user == comment.user %}
-  <a href="{% url 'delete_comment' comment.subject %}">Delete</a>
-{% endif %}
+  <h6>{{ comment.subject }}</h6>
+  <p>{{ comment.comment }}</p>
+  <p>{{ comment.user }} {{ comment.date }}</p>
+  {% if request.user == comment.user %}
+    <a href="{% url 'delete_comment' comment.subject %}">Delete</a>
+  {% endif %}
 {% endfor %}
 
 {% endblock %}

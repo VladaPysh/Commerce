@@ -32,10 +32,11 @@ class Listing(models.Model):
     image = models.ImageField(default='default.png')
     start_bid = models.DecimalField(max_digits=12, decimal_places=2)
     date_created = models.DateTimeField(default=timezone.now)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, default=None, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ManyToManyField(Comment)
-    bid = models.ManyToManyField(Bid)
+    comment = models.ManyToManyField(Comment, default=None)
+    bid = models.ManyToManyField(Bid, default=None)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
