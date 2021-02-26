@@ -32,16 +32,16 @@
   <p>{{ listing.user }} {{ listing.date_created }}</p>
 </div>
 
+{% if request.user == listing.user %}
+  <a href="{% url 'status' listing.title %}">Close auction</a>
+{% endif %}
+
 {% if listing.status == False %}
   {% if request.user != listing.user %}
     <form action="{% url 'item' listing.title %}" method="POST">
       {% csrf_token %}
       {{ bid }}
     </form>
-  {% endif %}
-
-  {% if request.user == listing.user %}
-    <a href="{% url 'status' listing.title %}">Close auction</a>
   {% endif %}
 
   {% if listing not in watchlist.listing.all %}

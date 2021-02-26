@@ -79,7 +79,6 @@ def create(request):
             listing = form.save(commit=False)
             listing.user = request.user
             listing.save()
-            
             return redirect("item", listing_title = listing.title)
         else:
             form = CreateListing
@@ -153,10 +152,8 @@ def item(request, listing_title):
 @login_required(login_url='/login')
 def auction_status(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
-    if request.method == "POST":
-        listing.status = True
-        listing.save()
-    messages.add_message(request, messages.SUCCESS, "Auction closed")
+    listing.status = True
+    listing.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required(login_url='/login')
@@ -181,11 +178,8 @@ def delete_comment(request, comment_subject):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def category(request, category_name):
-    #get list of categories
     category = Category.objects.get(category=category_name)
-    #get listings where category field matches category selected
     listing_category = Listing.objects.filter(category=category)
-    #return template providing category names and listings
     return render(request, "auctions/category.html", {
         "category": category.category,
         "listings": listing_category,
