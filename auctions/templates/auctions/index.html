@@ -2,13 +2,15 @@
 
 {% block body %}
 
-<a href="{% url 'create' %}">Create Listing</a>
-
     <h2>Active Listings</h2>
-    {% for listing in listings %}
-    <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
-    <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
-    <p>{{ listing.description }}</p>
-    {% endfor %}
+    <div class="flex">
+        {% for listing in listings %}
+        <div class="flex-item">
+            <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
+            <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
+            <p>{{ listing.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
     
 {% endblock %}

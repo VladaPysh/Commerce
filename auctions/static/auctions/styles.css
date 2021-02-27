@@ -1,3 +1,31 @@
 body {
+    margin: 1vh 5vw;
     padding: 10px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search {
+    width: 250px;
+    padding: 2px 5px;
+    outline: none;
+    border: 0.5px solid black;
+}
+
+.search:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.categories {
+    padding: 2px;
+    border: 0.5px solid black;
+}
+
+.categories:focus {
+    outline: none;
 }

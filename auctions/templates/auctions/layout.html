@@ -10,47 +10,56 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
+    <div class="flex">
+        <div class="flex-item">
+            <h1>Auctions</h1>
+            <div>
+                {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
+                {% else %}
                 Not signed in.
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
-            </li>
-            {% if user.is_authenticated %}
+        <div class="flex-item">
+            <ul class="nav">
+                <form action="{% url 'search' %}">
+                    <input class="search" type="text" name="q" placeholder="Search">
+                </form>
+                <div class="dropdown">
+                    <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for category in categories %}
+                        <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
-            {% else %}
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
                 </li>
-            {% endif %}
-            <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Categories
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {% for category in categories %}
-                    <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-            <form action="{% url 'search' %}">
-                <input class="search" type="text" name="q" placeholder="Search">
-            </form>
-        </ul>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
         <hr>
         {% block body %}
         {% endblock %}
