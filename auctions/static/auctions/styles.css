@@ -1,5 +1,4 @@
 body {
-    margin: 1vh 5vw;
     padding: 10px;
 }
 
@@ -8,6 +7,16 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+}
+.margin {
+    margin: 1vh 5vw;
+}
+.flex1 {
+    flex: 1;
+}
+
+.flex2 {
+    flex: 2;
 }
 
 .search {
@@ -28,4 +37,8 @@ body {
 
 .categories:focus {
     outline: none;
+}
+
+img {
+    object-fit: contain;
 }

@@ -1,16 +1,39 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-    <h2>Active Listings</h2>
-    <div class="flex">
-        {% for listing in listings %}
-        <div class="flex-item">
-            <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
-            <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
-            <p>{{ listing.description }}</p>
+<div clas="background">
+    <div class="margin flex">
+        <div class="flex1">
+            History is priceless...
         </div>
-        {% endfor %}
+        <div class="flex flex2">
+            <form action="{% url 'search' %}">
+                <input class="search" type="text" name="q" placeholder="Search">
+            </form>
+            <div class="dropdown">
+                <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for category in categories %}
+                    <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <a href="{% url 'create' %}">Create Listing</a>
+            <a href="{% url 'watchlist' %}">Watchlist</a>
+        </div>
     </div>
+</div>
+<h2 class="margin ">Active Listings</h2>
+<div class="margin flex">
+    {% for listing in listings %}
+    <div>
+        <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
+        <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height: 300px;">
+        <p>{{ listing.description }}</p>
+    </div>
+    {% endfor %}
+</div>
     
 {% endblock %}

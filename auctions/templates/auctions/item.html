@@ -1,9 +1,36 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div clas="background">
+  <div class="margin flex">
+      <div class="flex1">
+          History is priceless...
+      </div>
+      <div class="flex flex2">
+          <form action="{% url 'search' %}">
+              <input class="search" type="text" name="q" placeholder="Search">
+          </form>
+          <div class="dropdown">
+              <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categories
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {% for category in categories %}
+                  <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                  {% endfor %}
+              </div>
+          </div>
+          <a href="{% url 'index' %}">Active Listings</a>
+          <a href="{% url 'create' %}">Create Listing</a>
+          <a href="{% url 'watchlist' %}">Watchlist</a>
+      </div>
+  </div>
+</div>
+<div class="margin">
+  <h2>Listing</h2>
 {% if messages %}
-<ul class="alert alert-success">
-  {% for message in messages %}
+  <ul class="alert alert-success">
+    {% for message in messages %}
     <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
       {{ message }}
     </li>
@@ -24,7 +51,7 @@
 </div>
 
 <div> 
-  <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
+  <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height: 300;">
   <h1>{{ listing.title }}</h1>
   <p>{{ listing.description }}</p>
   Current bid: {{ listing.start_bid }}</p>
@@ -33,7 +60,9 @@
 </div>
 
 {% if request.user == listing.user %}
+  {% if listing.status == False %}
   <a href="{% url 'status' listing.title %}">Close auction</a>
+  {% endif %}
 {% endif %}
 
 {% if listing.status == False %}
@@ -70,6 +99,7 @@
   {% if request.user == comment.user %}
     <a href="{% url 'delete_comment' comment.subject %}">Delete</a>
   {% endif %}
+</div>
 {% endfor %}
 
 {% endblock %}

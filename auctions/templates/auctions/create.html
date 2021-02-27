@@ -1,11 +1,37 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<h2>Create Listing</h2>
-<form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
-</form>
+<div clas="background">
+  <div class="margin flex">
+      <div class="flex1">
+          History is priceless...
+      </div>
+      <div class="flex flex2">
+          <form action="{% url 'search' %}">
+              <input class="search" type="text" name="q" placeholder="Search">
+          </form>
+          <div class="dropdown">
+              <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categories
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {% for category in categories %}
+                  <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                  {% endfor %}
+              </div>
+          </div>
+          <a href="{% url 'index' %}">Active Listings</a>
+          <a href="{% url 'watchlist' %}">Watchlist</a>
+      </div>
+  </div>
+</div>
+<h2 class="margin ">Create Listing</h2>
+<div class="margin flex">
+  <form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+</div>
 
 {% endblock %}

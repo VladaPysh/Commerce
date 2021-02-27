@@ -1,13 +1,41 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<a href="{% url 'create' %}">Create Listing</a>
-
-    <h2>Watchlist</h2>
+<div clas="background">
+    <div class="margin flex">
+        <div class="flex1">
+            History is priceless...
+        </div>
+        <div class="flex flex2">
+            <form action="{% url 'search' %}">
+                <input class="search" type="text" name="q" placeholder="Search">
+            </form>
+            <div class="dropdown">
+                <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for category in categories %}
+                    <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <a href="{% url 'index' %}">Active Listings</a>
+            <a href="{% url 'create' %}">Create Listing</a>
+        </div>
+    </div>
+</div>
+<h2 class="margin ">Watchlist</h2>
+<div class="margin flex">
     {% for listing in watchlist.listing.all %}
-    <h4>{{ listing.title }} </h4>
-    {% empty %}
-    <h5>Nothing in a watchlist</h5>
-    {% endfor %}
+    <div>
+        <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
+        <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
+        <p>{{ listing.description }}</p>
+        {% empty %}
+        <h5>Nothing in a watchlist</h5>
+        {% endfor %}
+    </div>
+</div>
     
 {% endblock %}

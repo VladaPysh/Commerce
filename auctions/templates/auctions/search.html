@@ -10,7 +10,7 @@
     {% endif %}
     {% for listing in listings %}
     <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
-    <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
+    <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height: 300px;">
     <p>{{ listing.description }}</p>
     {% endfor %}
     

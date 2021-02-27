@@ -10,8 +10,8 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-    <div class="flex">
-        <div class="flex-item">
+    <div class="margin flex">
+        <div>
             <h1>Auctions</h1>
             <div>
                 {% if user.is_authenticated %}
@@ -21,30 +21,8 @@
                 {% endif %}
             </div>
         </div>
-        <div class="flex-item">
+        <div>
             <ul class="nav">
-                <form action="{% url 'search' %}">
-                    <input class="search" type="text" name="q" placeholder="Search">
-                </form>
-                <div class="dropdown">
-                    <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categories
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        {% for category in categories %}
-                        <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
-                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
