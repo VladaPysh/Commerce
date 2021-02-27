@@ -28,7 +28,7 @@
 <h2 class="margin ">Watchlist</h2>
 <div class="margin flex">
     {% for listing in watchlist.listing.all %}
-    <div>
+    <div class="flex-item">
         <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
         <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height:auto;">
         <p>{{ listing.description }}</p>

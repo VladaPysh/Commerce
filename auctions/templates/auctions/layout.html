@@ -12,10 +12,10 @@
     <body>
     <div class="margin flex">
         <div>
-            <h1>Auctions</h1>
+            <div class="logo"></div>
             <div>
                 {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
+                <h6>Signed in as <strong>{{ user.username }}</strong>.</h6>
                 {% else %}
                 Not signed in.
                 {% endif %}
@@ -38,7 +38,6 @@
             </ul>
         </div>
     </div>
-        <hr>
         {% block body %}
         {% endblock %}
     </body>
