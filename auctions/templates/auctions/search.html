@@ -1,17 +1,44 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div class="background">
+    <div class="margin flex">
+        <div class="flex1">
+            <div class="history">History is priceless...</div>
+        </div>
+        <div class="flex flex2">
+            <form action="{% url 'search' %}">
+                <input class="search" type="text" name="q" placeholder="Search">
+            </form>
+            <div class="dropdown">
+                <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for category in categories %}
+                    <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <a class="flex-item" href="{% url 'index' %}">Active Listings</a>
+            <a class="flex-item" href="{% url 'create' %}">Create Listing</a>
+            <a class="flex-item" href="{% url 'watchlist' %}">Watchlist</a>
+        </div>
+    </div>
+</div>
 
-<a href="{% url 'create' %}">Create Listing</a>
-
-    <h2>Search</h2>
-    {% if message %}
-    <h5>{{ message }}</h5>
-    {% endif %}
+<h2 class="margin">Search</h2>
+{% if message %}
+<h5 class="margin">{{ message }}</h5>
+{% endif %}
+<div class="margin flex">
     {% for listing in listings %}
-    <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
-    <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height: 300px;">
-    <p>{{ listing.description }}</p>
+    <a class="flex-item listing" href="{% url 'item' listing.title %}">
+        <h4>{{ listing.title }}</h4>
+        <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
+        <p>{{ listing.description }}</p>
+    </a>
     {% endfor %}
+</div>
     
 {% endblock %}

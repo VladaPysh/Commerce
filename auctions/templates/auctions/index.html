@@ -10,7 +10,7 @@
             <form action="{% url 'search' %}">
                 <input class="search" type="text" name="q" placeholder="Search">
             </form>
-            <div class="dropdown flex-item">
+            <div class="dropdown">
                 <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categories
                 </button>
@@ -28,11 +28,11 @@
 <h2 class="margin ">Active Listings</h2>
 <div class="margin flex">
     {% for listing in listings %}
-    <div class="flex-item">
-        <h4><a href="{% url 'item' listing.title %}">{{ listing.title }} </a></h4>
+    <a class="flex-item listing" href="{% url 'item' listing.title %}">
+        <h4>{{ listing.title }}</h4>
         <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
         <p>{{ listing.description }}</p>
-    </div>
+    </a>
     {% endfor %}
 </div>
     

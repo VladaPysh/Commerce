@@ -180,11 +180,19 @@ def delete_comment(request, comment_subject):
 def category(request, category_name):
     category = Category.objects.get(category=category_name)
     listing_category = Listing.objects.filter(category=category)
-    return render(request, "auctions/category.html", {
-        "category": category.category,
-        "listings": listing_category,
-        "categories": Category.objects.all()
-    })
+    if listing_category:
+        return render(request, "auctions/category.html", {
+            "category": category.category,
+            "listings": listing_category,
+            "categories": Category.objects.all()
+            })
+    else:
+        return render(request, "auctions/category.html", {
+            "category": category.category,
+            "listings": listing_category,
+            "categories": Category.objects.all(),
+            "message": "Nothing found"
+            })
 
 def search(request):
     query = request.GET.get('q')
@@ -203,5 +211,6 @@ def search(request):
                 })
             else:
                 return render(request, "auctions/search.html", {
-                    "message": "Nothing found"
+                    "message": "Nothing found",
+                    "categories": Category.objects.all()
                 })
