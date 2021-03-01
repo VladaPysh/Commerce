@@ -1,15 +1,38 @@
 body {
-    background-color: whitesmoke;
+    background-color: rgba(255, 255, 255, 0.055);
+    font-family: Roboto;
+    color: rgb(4, 4, 36)
+}
+
+a {
+    color: rgb(4, 4, 36)
 }
 
 .logo {
     background-image: url('images/AuctionsLogo.png');
     background-repeat: no-repeat;
     background-size: contain;
-    min-height: 80px;
+    min-height: 50px;
 }
 h6 {
+    font-family: Arapey;
+    font-size: 18px;
+    margin: 0;
+}
+
+.history {
+    font-family: Arapey;
+    font-style: italic;
+    font-size: 2rem;
+    color: white;
+}
+
+.background a {
+    color: rgb(255, 255, 255);
     font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.589);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .flex {
@@ -22,13 +45,15 @@ h6 {
     margin: 1vh 5vw;
 }
 .flex1 {
-    margin-top: 8vh 0;
+    margin-top: 4vh 0;
     flex: 1;
+    padding: 10px;
 }
 
 .flex2 {
-    margin: 8vh 0;
+    margin: 2vh 0;
     flex: 2;
+    padding: 10px;
 }
 
 .background {
@@ -47,15 +72,18 @@ h6 {
     padding: 2px 5px;
     outline: none;
     border: 0.5px solid black;
+    border-radius: 5px;
 }
 
 .search:hover {
-    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.432);
 }
 
 .categories {
     padding: 2px;
     border: 0.5px solid black;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .categories:focus {

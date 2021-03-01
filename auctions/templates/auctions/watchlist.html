@@ -1,16 +1,16 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div clas="background">
+<div class="background">
     <div class="margin flex">
         <div class="flex1">
-            History is priceless...
+            <div class="history">History is priceless...</div>
         </div>
         <div class="flex flex2">
             <form action="{% url 'search' %}">
                 <input class="search" type="text" name="q" placeholder="Search">
             </form>
-            <div class="dropdown">
+            <div class="dropdown flex-item">
                 <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categories
                 </button>
@@ -20,8 +20,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <a href="{% url 'index' %}">Active Listings</a>
-            <a href="{% url 'create' %}">Create Listing</a>
+            <a class="flex-item" href="{% url 'index' %}">Active Listings</a>
+            <a class="flex-item" href="{% url 'create' %}">Create Listing</a>
         </div>
     </div>
 </div>
