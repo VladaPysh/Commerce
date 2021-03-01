@@ -93,7 +93,6 @@
 </form>
 
 {% for comment in listing.comment.all %}
-  <h6>{{ comment.subject }}</h6>
   <p>{{ comment.comment }}</p>
   <p>{{ comment.user }} {{ comment.date }}</p>
   {% if request.user == comment.user %}

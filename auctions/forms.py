@@ -9,7 +9,7 @@ class CreateListing(ModelForm):
 class LeaveComment(ModelForm):
     class Meta:
         model = Comment
-        fields = ['subject', 'comment']
+        fields = ['comment']
 
 class Bid(ModelForm):
     class Meta:
