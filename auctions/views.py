@@ -207,7 +207,8 @@ def search(request):
                     entries.append(listing)
             if entries:
                 return render(request, "auctions/search.html", {
-                    "listings": entries
+                    "listings": entries,
+                    "categories": Category.objects.all()
                 })
             else:
                 return render(request, "auctions/search.html", {

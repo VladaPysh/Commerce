@@ -9,14 +9,12 @@ a {
 }
 
 .logo {
-    background-image: url('images/AuctionsLogo.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    min-height: 50px;
+    height: 70px;
 }
+
 h6 {
     font-family: Arapey;
-    font-size: 18px;
+    font-size: 14px;
     margin: 0;
 }
 
@@ -28,11 +26,17 @@ h6 {
 }
 
 .background .flex-item {
-    color: rgb(255, 255, 255);
     font-size: 1rem;
-    background-color: rgba(0, 0, 0, 0.589);
-    padding: 8px;
+    font-weight: 800;
+    background-color: rgba(255, 255, 255, 0.815);
+    padding: 5px;
     border-radius: 5px;
+}
+
+.background .flex-item:hover {
+    background-color: rgba(4, 6, 29, 0.712);
+    text-decoration: none;
+    color: white;
 }
 
 .flex {
@@ -41,17 +45,19 @@ h6 {
     align-items: center;
     flex-wrap: wrap;
 }
+
 .margin {
     margin: 1vh 5vw;
 }
+
 .flex1 {
-    margin-top: 4vh 0;
+    margin-top: 5vh 0;
     flex: 1;
     padding: 10px;
 }
 
 .flex2 {
-    margin: 2vh 0;
+    margin: 5vh 0;
     flex: 2;
     padding: 10px;
 }
@@ -98,6 +104,7 @@ img {
     background-color: #25334431;
     cursor: pointer;
     color:rgb(4, 4, 36);
+    box-shadow: 0 0 11px rgba(4, 4, 36, 0.445);
     text-decoration: none;
     border-radius: 10px;
     transition: 0.1s;

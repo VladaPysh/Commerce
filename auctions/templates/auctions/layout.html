@@ -17,14 +17,8 @@
     </head>
     <body>
     <div class="margin flex">
-        <div>
-            <a href="{% url 'index' %}"><div class="logo"></div></a>
-                {% if user.is_authenticated %}
-                <h6>Signed in as <strong>{{ user.username }}</strong>.</h6>
-                {% else %}
-                <h6>Not signed in.</h6>
-                {% endif %}
-        </div>
+        <div style="width: 60px;"></div>
+        <a href="{% url 'index' %}"><img class="logo" src="{% static 'auctions/images/AuctionsLogo.png' %}" alt="logo"></a>
         <div>
             <ul class="nav">
                 {% if user.is_authenticated %}
@@ -40,6 +34,11 @@
                 </li>
                 {% endif %}
             </ul>
+            {% if user.is_authenticated %}
+            <h6>Signed in as <strong>{{ user.username }}</strong>.</h6>
+            {% else %}
+            <h6>Not signed in.</h6>
+            {% endif %}
         </div>
     </div>
         {% block body %}
