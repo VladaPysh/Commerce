@@ -100,6 +100,10 @@ img {
     object-fit: contain;
 }
 
+.listing {
+    max-width: 350px;
+}
+
 .listing:hover {
     background-color: #25334431;
     cursor: pointer;
@@ -108,4 +112,17 @@ img {
     text-decoration: none;
     border-radius: 10px;
     transition: 0.1s;
+}
+
+.p {
+    padding: 10px 0;
+}
+
+.description {
+    padding: 100px;
+}
+
+.item {
+    border: 0.5px solid rgba(4, 4, 36, 0.233);
+    border-radius: 10px;
 }

@@ -1,14 +1,39 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="margin">
+<div class="background">
+    <div class="margin flex">
+        <div class="flex1">
+            <div class="history">History is priceless...</div>
+        </div>
+        <div class="flex flex2">
+            <form action="{% url 'search' %}">
+                <input class="search" type="text" name="q" placeholder="Search">
+            </form>
+            <div class="dropdown">
+                <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for category in categories %}
+                    <a class="dropdown-item" href="{% url 'category' category.category %}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <a class="flex-item" href="{% url 'index' %}">Active Listings</a>
+        </div>
+    </div>
+</div>
+
+<div class="margin flex">
+    <div class="flex-item">
     <h2>Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
+    <form class="form" action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <input class="form-control" autofocus type="text" name="username" placeholder="Username">
@@ -25,6 +50,7 @@
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    <div class="p">Already have an account? <a href="{% url 'login' %}"><b>Log In here.</b></a></div>
+    </div>
 </div>
 {% endblock %}

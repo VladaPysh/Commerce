@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 from .models import *
@@ -13,8 +14,11 @@ from .forms import CreateListing, LeaveComment, Bid
 
 def index(request):
     listings = Listing.objects.all()
+    paginator = Paginator(listings, 24)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, "auctions/index.html", {
-        "listings": listings,
+        "listings": page_obj,
         "categories": Category.objects.all()
     })
 

@@ -29,7 +29,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(max_length=500)
     image = models.ImageField(default='default.png')
-    start_bid = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=12, decimal_places=2)
     date_created = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(Category, default=None, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
