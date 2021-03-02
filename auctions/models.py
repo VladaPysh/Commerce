@@ -27,11 +27,11 @@ class Bid(models.Model):
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=350)
     image = models.ImageField(default='default.png')
     price = models.DecimalField(max_digits=12, decimal_places=2)
     date_created = models.DateTimeField(default=timezone.now)
-    category = models.ForeignKey(Category, default=None, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, default="None", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ManyToManyField(Comment, default=None)
     bid = models.ManyToManyField(Bid, default=None)

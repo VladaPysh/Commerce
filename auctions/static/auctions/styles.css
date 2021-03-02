@@ -101,7 +101,7 @@ img {
 }
 
 .listing {
-    max-width: 350px;
+    max-width: 300px;
 }
 
 .listing:hover {
@@ -118,11 +118,9 @@ img {
     padding: 10px 0;
 }
 
-.description {
-    padding: 100px;
-}
-
 .item {
     border: 0.5px solid rgba(4, 4, 36, 0.233);
     border-radius: 10px;
+    padding: 10px;
+    max-width: 900px;
 }

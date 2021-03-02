@@ -26,38 +26,44 @@
       </div>
   </div>
 </div>
+
 <div class="margin">
   <h2>Listing</h2>
-{% if messages %}
-  <ul class="alert alert-success">
+  <div class="messages">
+  {% if messages %}
+  <ul class="alert alert-info">
     {% for message in messages %}
     <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
       {{ message }}
     </li>
-  {% endfor %}
-</ul>
-{% endif %}
-<div>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
   {% if listing.status == True %}
-    This auction is closed.
+    <div class="alert alert-secondary">This auction is closed.</div>
     {% for user in listing.bid.all %}
       {% if listing.start_bid == user.bid %}
         {% if user.user == request.user %}
-          Congratulations {{ user.user }}!
+        <div class="alert alert-success">Congratulations {{ user.user }}!</div>
         {% endif %}
       {% endif %}
     {% endfor %}
   {% endif %}
-</div>
+  </div>
 
-<div> 
-  <img src="{{ listing.image.url }}" alt="image" style="width: 300px; height: 300;">
-  <h1>{{ listing.title }}</h1>
-  <p>{{ listing.description }}</p>
-  Current price: {{ listing.price }}$</p>
-  <p>{{ listing.get_category_display }}</p>
-  <p>{{ listing.user }} {{ listing.date_created }}</p>
-</div>
+<div class="flex item">
+  <div class="flex-item"> 
+    <img src="{{ listing.image.url }}" alt="image" style="width: 280px; height: 300;">
+  </div>
+  <div class="flex-item">
+    <h1>{{ listing.title }}</h1>
+    <p style="max-width: 500px;">{{ listing.description }}</p>
+    Current price: {{ listing.price }}$</p>
+    <p>{{ listing.get_category_display }}</p>
+    <p>Seller: {{ listing.user }} 
+    <p>Listed on {{ listing.date_created }}</p>
+
 
 {% if request.user == listing.user %}
   {% if listing.status == False %}
@@ -69,7 +75,7 @@
   {% if request.user != listing.user %}
     <form action="{% url 'item' listing.title %}" method="POST">
       {% csrf_token %}
-      {{ bid }}
+      {{ bid }}$
     </form>
   {% endif %}
 
@@ -85,7 +91,10 @@
     </form>
   {% endif %}
 {% endif %}
-
+</div>
+</div>
+</div>
+<div class="margin">
 <form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}
   {{ form.as_p }}
