@@ -25,13 +25,13 @@
       </div>
   </div>
 </div>
-<div class="margin flex">
+<div class="margin margin-top flex">
     <div class="flex-item item">
         <h2>Create Listing</h2>
         <form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Submit">
+            <input class="button add" type="submit" value="Submit">
         </form>
     </div>
 </div>

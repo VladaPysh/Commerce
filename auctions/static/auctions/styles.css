@@ -50,6 +50,10 @@ h6 {
     margin: 1vh 5vw;
 }
 
+.margin-top {
+    margin-top: 3vh;
+}
+
 .flex1 {
     margin-top: 5vh 0;
     flex: 1;
@@ -126,4 +130,31 @@ img {
     max-width: 900px;
     background-color: rgba(4, 4, 36, 0.075);
     box-shadow: 0 0 5px rgba(4, 4, 36, 0.445);
+}
+
+.button {
+    margin: 10px;
+    border-color:rgba(105, 72, 2, 0.185);
+    color: rgb(4, 4, 36);
+    border-radius: 5px;
+    padding: 1% 5%;
+}
+
+.add {
+    background-color: rgb(255, 196, 0);
+
+}
+
+.add:hover {
+    background-color: #b08567c2;
+    outline: none;
+}
+
+.remove {
+    background-color: #b08567c2;
+}
+
+.remove:hover {
+    background-color: rgb(255, 196, 0);
+    outline: none;
 }

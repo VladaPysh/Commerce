@@ -1,14 +1,14 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from .models import Listing, Comment, Bid
 
 class CreateListing(ModelForm):
     class Meta:
         model = Listing
         fields = ['title', 'description', 'price', 'image', 'category']
-        
-        def __init__(self, *args, **kwargs):
-            super(CreateListing, self).__init__(*args, **kwargs)
-            self.fields['price'].widget.attrs['min'] = 10
+        widgets = {
+            'title': Textarea(attrs={'cols': 50, 'rows': 1}),
+            'description': Textarea(attrs={'cols': 45, 'rows': 4}),
+        }
 
 class LeaveComment(ModelForm):
     class Meta:

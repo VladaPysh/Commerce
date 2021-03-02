@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<div class="margin flex">
+<div class="margin flex margin-top">
   <div class="flex-item">
   <h2>Listing</h2>
   <div class="messages">
@@ -44,9 +44,9 @@
   {% if listing.status == True %}
     <div class="alert alert-secondary">This auction is closed.</div>
     {% for user in listing.bid.all %}
-      {% if listing.start_bid == user.bid %}
+      {% if listing.price == user.bid %}
         {% if user.user == request.user %}
-        <div class="alert alert-success">Congratulations {{ user.user }}!</div>
+        <div class="alert alert-success">Congratulations {{ user.user }}! You won.</div>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -60,7 +60,7 @@
   <div class="flex-item">
     <h1>{{ listing.title }}</h1>
     <p style="max-width: 500px;">{{ listing.description }}</p>
-    Current price: {{ listing.price }}$</p>
+    Current price: <b>{{ listing.price }}$</b></p>
     <p>{{ listing.get_category_display }}</p>
     <p>Seller: {{ listing.user }} 
     <p>Listed on {{ listing.date_created }}</p>
@@ -68,7 +68,10 @@
 
 {% if request.user == listing.user %}
   {% if listing.status == False %}
-  <a href="{% url 'status' listing.title %}">Close auction</a>
+  <form action="{% url 'status' listing.title %}">
+    {% csrf_token %}
+    <button class="button" type="submit" href="{% url 'status' listing.title %}">Close auction</button>
+  </form>
   {% endif %}
 {% endif %}
 
@@ -77,18 +80,19 @@
     <form action="{% url 'item' listing.title %}" method="POST">
       {% csrf_token %}
       {{ bid }}$
+    <button class="button remove" type="submit">Place a bid</button>
     </form>
   {% endif %}
 
   {% if listing not in watchlist.listing.all %}
     <form action="{% url 'watch' listing.title %}" method="POST">
       {% csrf_token %}
-      <button type="submit">Add to watchlist</button>
+      <button class="button add" type="submit">Add to watchlist</button>
     </form>
   {% else %}
     <form action="{% url 'dont_watch' listing.title %}" method="POST">
       {% csrf_token %}
-      <button type="submit">Remove from watchlist</button>
+      <button class="button remove" type="submit">Remove from watchlist</button>
     </form>
   {% endif %}
 {% endif %}

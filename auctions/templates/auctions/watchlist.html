@@ -25,7 +25,7 @@
         </div>
     </div>
 </div>
-<h2 class="margin ">Watchlist</h2>
+<h2 class="margin margin-top">Watchlist</h2>
 <div class="margin flex">
     {% for listing in watchlist.listing.all %}
     <a class="flex-item listing" href="{% url 'item' listing.title %}">
