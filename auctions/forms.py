@@ -13,7 +13,7 @@ class CreateListing(ModelForm):
 class LeaveComment(ModelForm):
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['subject','comment']
 
 class Bid(ModelForm):
     class Meta:

@@ -119,8 +119,11 @@ img {
 }
 
 .item {
-    border: 0.5px solid rgba(4, 4, 36, 0.233);
+    border: 0.5px solid rgba(4, 4, 36, 0.075);
     border-radius: 10px;
+    margin-top: 15px;
     padding: 10px;
     max-width: 900px;
+    background-color: rgba(4, 4, 36, 0.075);
+    box-shadow: 0 0 5px rgba(4, 4, 36, 0.445);
 }

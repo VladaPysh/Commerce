@@ -13,6 +13,7 @@ class Category(models.Model):
         return self.category
 
 class Comment(models.Model):
+    subject = models.CharField(max_length=64)
     comment = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)

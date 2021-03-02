@@ -126,7 +126,7 @@ def item(request, listing_title):
     listing = Listing.objects.get(title=listing_title)
     if request.method == "POST":
         #get start bid value
-        start_bid = listing.start_bid
+        start_bid = listing.price
         #get info from Bid form check if value is greater than starting price
         bid = float(request.POST['bid'])
         if bid > start_bid:
@@ -138,7 +138,7 @@ def item(request, listing_title):
                 #save new value in listing bid instance
                 listing.bid.add(bid)
                 #overwrite start_bid with a new start value
-                listing.start_bid = bid.bid
+                listing.price = bid.bid
                 listing.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:

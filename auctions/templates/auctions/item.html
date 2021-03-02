@@ -27,7 +27,8 @@
   </div>
 </div>
 
-<div class="margin">
+<div class="margin flex">
+  <div class="flex-item">
   <h2>Listing</h2>
   <div class="messages">
   {% if messages %}
@@ -94,7 +95,12 @@
 </div>
 </div>
 </div>
-<div class="margin">
+</div>
+</div>
+
+
+<div class="margin flex">
+  <div class="flex-item">
 <form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}
   {{ form.as_p }}
@@ -102,11 +108,13 @@
 </form>
 
 {% for comment in listing.comment.all %}
+  <p>{{ comment.subject }}</p>
   <p>{{ comment.comment }}</p>
   <p>{{ comment.user }} {{ comment.date }}</p>
   {% if request.user == comment.user %}
     <a href="{% url 'delete_comment' comment.subject %}">Delete</a>
   {% endif %}
+</div>
 </div>
 {% endfor %}
 
