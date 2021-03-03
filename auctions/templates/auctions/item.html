@@ -29,97 +29,102 @@
 
 <div class="margin flex margin-top">
   <div class="flex-item">
-  <h2>Listing</h2>
-  <div class="messages">
-  {% if messages %}
-  <ul class="alert alert-info">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-      {{ message }}
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
-  {% if listing.status == True %}
-    <div class="alert alert-secondary">This auction is closed.</div>
-    {% for user in listing.bid.all %}
-      {% if listing.price == user.bid %}
-        {% if user.user == request.user %}
-        <div class="alert alert-success">Congratulations {{ user.user }}! You won.</div>
-        {% endif %}
+    <h2>Listing</h2>
+    <div class="messages">
+      {% if messages %}
+      <ul class="alert alert-info">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
       {% endif %}
+      
+      {% if listing.status == True %}
+      <div class="alert alert-secondary">This auction is closed.</div>
+      {% for user in listing.bid.all %}
+        {% if listing.price == user.bid %}
+          {% if user.user == request.user %}
+          <div class="alert alert-success">Congratulations {{ user.user }}! You won.</div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="flex item">
+      <div class="flex-item"> 
+        <img src="{{ listing.image.url }}" alt="image" style="width: 280px; height: 300;">
+      </div>
+      <div class="flex-item">
+        <h1>{{ listing.title }}</h1>
+        <p style="max-width: 500px;">{{ listing.description }}</p>
+        Current price: <b>{{ listing.price }}$</b></p>
+        <p>{{ listing.get_category_display }}</p>
+        <p>Seller: {{ listing.user }} </p>
+        <p>Listed on {{ listing.date_created }}</p>
+        
+        {% if request.user == listing.user %}
+          {% if listing.status == False %}
+          <form action="{% url 'status' listing.title %}">
+            {% csrf_token %}
+            <button class="button" type="submit" href="{% url 'status' listing.title %}">Close auction</button>
+          </form>
+          {% endif %}
+        {% endif %}
+        
+        {% if listing.status == False %}
+          {% if request.user != listing.user %}
+          <form action="{% url 'item' listing.title %}" method="POST">
+            {% csrf_token %}
+            {{ bid }}$
+            <button class="button add" type="submit">Place a bid</button>
+          </form>
+          {% endif %}
+          
+          {% if listing not in watchlist.listing.all %}
+          <form action="{% url 'watch' listing.title %}" method="POST">
+            {% csrf_token %}
+            <button class="button add" type="submit">Add to watchlist</button>
+          </form>
+          {% else %}
+          <form action="{% url 'dont_watch' listing.title %}" method="POST">
+            {% csrf_token %}
+            <button class="button remove" type="submit">Remove from watchlist</button>
+          </form>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-item">
+    <form action="{% url 'comment' listing.title %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="button add" type="submit" value="Submit">
+    </form>
+    
+    {% for comment in listing.comment.all %}
+    <div class="comment_section">
+      <div class="comment">
+        <p class="username"> {{ comment.user }}</p>
+        <h6>{{ comment.date }}</h6>
+      </div>
+      <div>
+        <b>{{ comment.subject }}</b>
+        <p>{{ comment.comment }}</p>
+      </div>
+      <div class="comment">
+        <div></div>
+        {% if request.user == comment.user %}
+        <a class="button remove" href="{% url 'delete_comment' comment.subject %}">Delete comment</a>
+        {% endif %}
+      </div>
+    </div>
     {% endfor %}
-  {% endif %}
   </div>
-
-<div class="flex item">
-  <div class="flex-item"> 
-    <img src="{{ listing.image.url }}" alt="image" style="width: 280px; height: 300;">
-  </div>
-  <div class="flex-item">
-    <h1>{{ listing.title }}</h1>
-    <p style="max-width: 500px;">{{ listing.description }}</p>
-    Current price: <b>{{ listing.price }}$</b></p>
-    <p>{{ listing.get_category_display }}</p>
-    <p>Seller: {{ listing.user }} 
-    <p>Listed on {{ listing.date_created }}</p>
-
-
-{% if request.user == listing.user %}
-  {% if listing.status == False %}
-  <form action="{% url 'status' listing.title %}">
-    {% csrf_token %}
-    <button class="button" type="submit" href="{% url 'status' listing.title %}">Close auction</button>
-  </form>
-  {% endif %}
-{% endif %}
-
-{% if listing.status == False %}
-  {% if request.user != listing.user %}
-    <form action="{% url 'item' listing.title %}" method="POST">
-      {% csrf_token %}
-      {{ bid }}$
-    <button class="button remove" type="submit">Place a bid</button>
-    </form>
-  {% endif %}
-
-  {% if listing not in watchlist.listing.all %}
-    <form action="{% url 'watch' listing.title %}" method="POST">
-      {% csrf_token %}
-      <button class="button add" type="submit">Add to watchlist</button>
-    </form>
-  {% else %}
-    <form action="{% url 'dont_watch' listing.title %}" method="POST">
-      {% csrf_token %}
-      <button class="button remove" type="submit">Remove from watchlist</button>
-    </form>
-  {% endif %}
-{% endif %}
 </div>
-</div>
-</div>
-
-  <div class="flex-item">
-<form action="{% url 'comment' listing.title %}" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
-</form>
-
-
-{% for comment in listing.comment.all %}
-<div class="item">
-  <p>{{ comment.user }}</p>
-  <b>{{ comment.subject }}</b>
-  <p>{{ comment.comment }}</p>
-  <p><h6>{{ comment.date }}</h6></p>
-  {% if request.user == comment.user %}
-    <a class="button remove" href="{% url 'delete_comment' comment.subject %}">Delete comment</a>
-  {% endif %}
-</div>
-</div>
-</div>
-{% endfor %}
 
 {% endblock %}

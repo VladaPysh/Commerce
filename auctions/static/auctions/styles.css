@@ -1,7 +1,8 @@
 body {
     background-color: #2533440c;
     font-family: Roboto;
-    color: rgb(4, 4, 36)
+    color: rgb(4, 4, 36);
+    min-height: 100vh;
 }
 
 a {
@@ -118,10 +119,6 @@ img {
     transition: 0.1s;
 }
 
-.p {
-    padding: 10px 0;
-}
-
 .item {
     border: 0.5px solid rgba(4, 4, 36, 0.075);
     border-radius: 10px;
@@ -161,4 +158,27 @@ img {
 
 b {
     font-size: 1.3rem;
+}
+
+.comment_section {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    border: 0.5px solid rgba(4, 4, 36, 0.041);
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 3px 15px;
+    background-color: rgba(4, 4, 36, 0.041);
+    box-shadow: 0 0 5px rgba(4, 4, 36, 0.158); 
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer {
+    background: linear-gradient(90deg, #253344e5 0%, #b08567e0 102.76%);
+    margin-top: 10vh;
+    min-height: 10vh;
 }

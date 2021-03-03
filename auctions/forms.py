@@ -7,7 +7,7 @@ class CreateListing(ModelForm):
         fields = ['title', 'description', 'price', 'image', 'category']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control'}),
-            'description': Textarea(attrs={'class': 'form-control'}),
+            'description': Textarea(attrs={'class': 'form-control', 'rows': '5'}),
             'price': NumberInput(attrs={'class': 'form-control col-6'})
         }
 
@@ -17,7 +17,7 @@ class LeaveComment(ModelForm):
         fields = ['subject','comment']
         widgets = {
             'subject': TextInput(attrs={'class': 'form-control'}),
-            'comment': Textarea(attrs={'class': 'form-control', 'rows': '5'}),
+            'comment': Textarea(attrs={'class': 'form-control', 'rows': '4'}),
         }
 
 class Bid(ModelForm):
