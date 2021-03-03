@@ -99,11 +99,7 @@
 </div>
 </div>
 </div>
-</div>
-</div>
 
-
-<div class="margin flex">
   <div class="flex-item">
 <form action="{% url 'comment' listing.title %}" method="POST">
   {% csrf_token %}
@@ -111,13 +107,17 @@
   <input type="submit" value="Submit">
 </form>
 
+
 {% for comment in listing.comment.all %}
-  <p>{{ comment.subject }}</p>
+<div class="item">
+  <p>{{ comment.user }}</p>
+  <b>{{ comment.subject }}</b>
   <p>{{ comment.comment }}</p>
-  <p>{{ comment.user }} {{ comment.date }}</p>
+  <p><h6>{{ comment.date }}</h6></p>
   {% if request.user == comment.user %}
-    <a href="{% url 'delete_comment' comment.subject %}">Delete</a>
+    <a class="button remove" href="{% url 'delete_comment' comment.subject %}">Delete comment</a>
   {% endif %}
+</div>
 </div>
 </div>
 {% endfor %}

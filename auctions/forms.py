@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea, NumberInput
+from django.forms import ModelForm, Textarea, NumberInput, TextInput
 from .models import Listing, Comment, Bid
 
 class CreateListing(ModelForm):
@@ -6,15 +6,19 @@ class CreateListing(ModelForm):
         model = Listing
         fields = ['title', 'description', 'price', 'image', 'category']
         widgets = {
-            'title': Textarea(attrs={'cols': 50, 'rows': 1}),
-            'description': Textarea(attrs={'cols': 45, 'rows': 4}),
-            'price': NumberInput(attrs={"class": "form-control mt-4"})
+            'title': TextInput(attrs={'class': 'form-control'}),
+            'description': Textarea(attrs={'class': 'form-control'}),
+            'price': NumberInput(attrs={'class': 'form-control col-6'})
         }
 
 class LeaveComment(ModelForm):
     class Meta:
         model = Comment
         fields = ['subject','comment']
+        widgets = {
+            'subject': TextInput(attrs={'class': 'form-control'}),
+            'comment': Textarea(attrs={'class': 'form-control', 'rows': '5'}),
+        }
 
 class Bid(ModelForm):
     class Meta:
