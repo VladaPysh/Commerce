@@ -140,6 +140,7 @@ def item(request, listing_title):
                 #overwrite start_bid with a new start value
                 listing.price = bid.bid
                 listing.save()
+                messages.add_message(request, messages.WARNING, "Your bid was successful.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.add_message(request, messages.WARNING, "Enter higher value")

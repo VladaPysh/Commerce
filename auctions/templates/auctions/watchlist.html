@@ -32,6 +32,7 @@
         <h4>{{ listing.title }}</h4>
         <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
         <p>{{ listing.description }}</p>
+        Current price: {{ listing.price }}$
         {% empty %}
         <h5>Nothing in a watchlist</h5>
         {% endfor %}

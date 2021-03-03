@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 
 
 class User(AbstractUser):
@@ -30,7 +32,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(max_length=350)
     image = models.ImageField(default='default.png')
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
     date_created = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(Category, default="None", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

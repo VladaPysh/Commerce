@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, NumberInput
 from .models import Listing, Comment, Bid
 
 class CreateListing(ModelForm):
@@ -8,6 +8,7 @@ class CreateListing(ModelForm):
         widgets = {
             'title': Textarea(attrs={'cols': 50, 'rows': 1}),
             'description': Textarea(attrs={'cols': 45, 'rows': 4}),
+            'price': NumberInput(attrs={"class": "form-control mt-4"})
         }
 
 class LeaveComment(ModelForm):
