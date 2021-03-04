@@ -100,7 +100,7 @@
   </div>
 
   <div class="flex-item">
-    <form action="{% url 'comment' listing.title %}" method="POST">
+    <form action="{% url 'comment' listing.title %}" autocomplete="off" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <input class="button add" type="submit" value="Submit">

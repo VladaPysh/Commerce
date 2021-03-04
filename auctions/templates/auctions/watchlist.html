@@ -26,11 +26,11 @@
     </div>
 </div>
 <h2 class="margin margin-top">Watchlist</h2>
-<div class="margin flex">
+<div class="margin flex ">
     {% for listing in watchlist.listing.all %}
     <a class="flex-item listing" href="{% url 'item' listing.title %}">
         <h5>{{ listing.title }}</h5>
-        <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
+        <img src="{{ listing.image.url }}" alt="image" style="width: 200px; height: auto;">
         Current price: <b>{{ listing.price }}$</b>
         {% empty %}
         <h5>Nothing in a watchlist</h5>
