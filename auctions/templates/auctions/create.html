@@ -8,7 +8,7 @@
       </div>
       <div class="flex flex2">
           <form action="{% url 'search' %}">
-              <input class="search" type="text" name="q" placeholder="Search">
+              <input class="search" type="text" name="q" autocomplete="off" placeholder="Search">
           </form>
           <div class="dropdown">
               <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,7 +28,7 @@
 <div class="margin margin-top flex">
     <div class="flex-item item">
         <h2>Create Listing</h2>
-        <form action="{% url 'create' %}" enctype='multipart/form-data' method="POST">
+        <form action="{% url 'create' %}" enctype='multipart/form-data' autocomplete="off" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <input class="button add" type="submit" value="Submit">

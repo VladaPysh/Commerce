@@ -29,9 +29,10 @@ h6 {
 .background .flex-item {
     font-size: 1rem;
     font-weight: 800;
-    background-color: rgba(255, 255, 255, 0.815);
-    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.856);
+    padding: 3px;
     border-radius: 5px;
+    margin: 5px;
 }
 
 .background .flex-item:hover {
@@ -106,7 +107,7 @@ img {
 }
 
 .listing {
-    max-width: 300px;
+    max-width: 250px;
 }
 
 .listing:hover {
@@ -181,4 +182,22 @@ b {
     background: linear-gradient(90deg, #253344e5 0%, #b08567e0 102.76%);
     margin-top: 10vh;
     min-height: 10vh;
+}
+
+@media screen and (max-width: 650px) {
+    .search {
+        width: 180px;
+    }
+    .logo {
+        height: 50px;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .flex1 {
+        margin: 2vh 0;
+    }
+    .flex2 {
+        margin: 0;
+    }
 }

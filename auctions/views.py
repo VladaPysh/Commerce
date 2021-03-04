@@ -14,7 +14,7 @@ from .forms import CreateListing, LeaveComment, Bid
 
 def index(request):
     listings = Listing.objects.all()
-    paginator = Paginator(listings, 24)
+    paginator = Paginator(listings, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, "auctions/index.html", {

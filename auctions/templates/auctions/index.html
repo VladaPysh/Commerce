@@ -8,7 +8,7 @@
         </div>
         <div class="flex flex2">
             <form action="{% url 'search' %}">
-                <input class="search" type="text" name="q" placeholder="Search">
+                <input class="search" type="text" name="q" autocomplete="off" placeholder="Search">
             </form>
             <div class="dropdown">
                 <button class="categories dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,7 +31,7 @@
     {% for listing in listings %}
     <a class="flex-item listing" href="{% url 'item' listing.title %}">
         <h4>{{ listing.title }}</h4>
-        <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
+        <img src="{{ listing.image.url }}" alt="image" style="width: 200px; height: 250px;">
         <p>{{ listing.description }}</p>
         Current price: {{ listing.price }}$
     </a>
