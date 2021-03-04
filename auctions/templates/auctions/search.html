@@ -34,8 +34,8 @@
 <div class="margin flex">
     {% for listing in listings %}
     <a class="flex-item listing" href="{% url 'item' listing.title %}">
-        <h4>{{ listing.title }}</h4>
-        <img src="{{ listing.image.url }}" alt="image" style="width: 250px; height: 300px;">
+        <h5>{{ listing.title }}</h5>
+        <img src="{{ listing.image.url }}" alt="image" style="width: 200px; height: auto;">
         <p>{{ listing.description }}</p>
     </a>
     {% endfor %}

@@ -13,7 +13,7 @@ from .forms import CreateListing, LeaveComment, Bid
 
 
 def index(request):
-    listings = Listing.objects.all()
+    listings = Listing.objects.filter(status=False)
     paginator = Paginator(listings, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
